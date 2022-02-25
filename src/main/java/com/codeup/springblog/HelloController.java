@@ -52,7 +52,23 @@ public class HelloController {
         return "greekGods";
     }
 
+// Roll Dice from Views Exercise
 
+//    @GetMapping("/roll-dice")
+//    public String showOptions() {
+//        return "roll-dice";
+//    }
+//
+//    @GetMapping("/roll-dice/{n}")
+//    public String showResult(@PathVariable int n, Model model) {
+//        int randomNum = (int)(Math.random() * 6) + 1;
+//        if(n == randomNum) {
+//            model.addAttribute("result", "You guessed correctly!");
+//        } else {
+//            model.addAttribute("result", "Sorry, your guess was incorrect.");
+//        }
+//        return "roll-dice";
+//    }
 
 
 }
