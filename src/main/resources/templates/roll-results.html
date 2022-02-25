@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Roll Results</title>
+
+    <th:block th:include="partials/bootstrap :: styling"></th:block>
+
+</head>
+<body>
+
+<nav th:replace="partials/navbar :: navbar"></nav>
+
+<h1>You guessed: <span th:text="${n}"></span></h1>
+<h1>The number was: <span th:text="${randomNumber}"></span></h1>
+
+<th:block th:replace="partials/bootstrap :: scripts"></th:block>
+
+</body>
+</html>
