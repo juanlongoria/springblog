@@ -13,12 +13,13 @@ public class Genre {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "books_genres",
-            joinColumns = {@JoinColumn(name="genre_id")},
-            inverseJoinColumns = {@JoinColumn(name = "book_id")}
-    )
+//    @ManyToMany
+//    @JoinTable(
+//            name = "books_genres",
+//            joinColumns = {@JoinColumn(name="genre_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "book_id")}
+//    )
+@ManyToMany(mappedBy = "genres")
     private List<Book> books;
 
     public Genre() {
