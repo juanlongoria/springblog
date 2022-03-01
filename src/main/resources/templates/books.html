@@ -6,7 +6,12 @@
 </head>
 <body>
 <ul>
-    <li th:each="book : ${allBooks}" th:text="${book.getTitle()}"></li>
+<!--    <li th:each="book : ${allBooks}" th:text="${book.getTitle()}"></li>-->
+    <li th:each="book : ${allBooks}">
+<!--        <u th:text="${book.getTitle()}"></u> by <span th:text="${book.getAuthor().getName()}"></span>-->
+        <u th:text="${book.getTitle()}"></u> by <span th:text="${book.getAuthor().getName()}"></span><span th:each="genre : ${book.getGenres()}"> [<span th:text="${genre.getName()}"></span>] </span>
+
+    </li>
 </ul>
 </body>
 </html>

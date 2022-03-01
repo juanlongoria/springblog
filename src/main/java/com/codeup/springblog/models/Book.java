@@ -1,6 +1,7 @@
 package com.codeup.springblog.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -13,15 +14,24 @@ public class Book {
     @Column(nullable = false, length = 100)
     private String title;
     // could also use the 'unique = true' argument to establish a unique constraint
-    @Column(nullable = false)
-    private String author;
+//    @Column(nullable = false)
+//    private String author;
+    @ManyToOne
+    @JoinColumn (name = "author_id")
+    private Author author;
 
-    public Book(){};
+    @ManyToMany(mappedBy = "books")
+    private List<Genre> genres;
 
-    public Book(long id, String title, String author) {
-        this.id = id;
+    public Book(){}
+
+//    public Book(long id, String title, String author) {
+public Book(long id, String title, Author author, List<Genre> genres) {
+
+    this.id = id;
         this.title = title;
         this.author = author;
+        this.genres = genres;
     }
 
     public long getId() {
@@ -40,11 +50,22 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+//    public String getAuthor() {
+public Author getAuthor() {
+
+    return author;
     }
 
-    public void setAuthor(String author) {
+//    public void setAuthor(String author) {
+public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 }
