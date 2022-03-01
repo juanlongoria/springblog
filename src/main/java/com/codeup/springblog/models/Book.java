@@ -20,7 +20,15 @@ public class Book {
     @JoinColumn (name = "author_id")
     private Author author;
 
-    @ManyToMany(mappedBy = "books")
+//    @ManyToMany(mappedBy = "books")
+
+    @ManyToMany
+    @JoinTable(
+            name = "books_genres",
+            joinColumns = {@JoinColumn(name="book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "genre_id")}
+    )
+
     private List<Genre> genres;
 
     public Book(){}
@@ -28,7 +36,7 @@ public class Book {
 //    public Book(long id, String title, String author) {
 public Book(long id, String title, Author author, List<Genre> genres) {
 
-    this.id = id;
+        this.id = id;
         this.title = title;
         this.author = author;
         this.genres = genres;
@@ -52,7 +60,6 @@ public Book(long id, String title, Author author, List<Genre> genres) {
 
 //    public String getAuthor() {
 public Author getAuthor() {
-
     return author;
     }
 

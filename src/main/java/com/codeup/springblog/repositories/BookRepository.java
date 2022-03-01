@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     // Will return a SINGLE book with the matching title.
-    Book findBookByTitle();
+//    Book findBookByTitle();
 
 
     // Custom queries may require you to use the @Query annotation, this uses HQL syntax.
