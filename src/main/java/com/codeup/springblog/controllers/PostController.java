@@ -1,41 +1,3 @@
-//package com.codeup.springblog.controllers;
-//
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.ResponseBody;
-//
-//@Controller
-//public class PostController {
-//    @GetMapping("/posts")
-//    @ResponseBody
-//    public String viewPosts() {
-//        return "posts index page";
-//    }
-//
-//    @GetMapping("/posts/{id}")
-//    @ResponseBody
-//    public String postDetails(@PathVariable long id) {
-//        return "View individual post";
-//    }
-//
-//    @GetMapping("/posts/create")
-//    @ResponseBody
-//    public String showCreateForm(){
-//        return "View the form for creating a post";
-//    }
-//
-//
-//    @PostMapping("/posts/create")
-//    @ResponseBody
-//    public String submitCreateForm() {
-//        return "Create a new post";
-//    }
-//}
-
-
-
 //For repositories and JPA lesson
 
 package com.codeup.springblog.controllers;
@@ -108,7 +70,8 @@ public class PostController{
 //        Post newPost = new Post(title, body);
     public String submitCreateForm(@ModelAttribute Post newPost) {
         //Post newPost = new Post(title, body);
-        newPost.setUser(usersDao.getById(1L));
+//        newPost.setUser(usersDao.getById(1L));
+        newPost.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         emailService.prepareAndSend(newPost, "New post created", "You had posted to our blog!");
         postsDao.save(newPost);
 
@@ -142,12 +105,21 @@ public class PostController{
 //    }
 
         // grab the post from our DAO
+        if (postsDao.getById(id).getUser().getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
+            postToEdit.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            // grab the post from our DAO
 //        Post postToEdit = postsDao.getById(id);
         // use setters to set new values to the object
+            // use setters to set new values to the object
 //        postToEdit.setTitle(title);
 //        postToEdit.setBody(body);
         // save the object with new values
-        postsDao.save(postToEdit);
+//        postsDao.save(postToEdit);
+//        return "redirect:/posts";
+            // save the object with new values
+            postsDao.save(postToEdit);
+        }
+
         return "redirect:/posts";
     }
 
