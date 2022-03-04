@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 @Controller
 public class BookController {
     private BookRepository bookDao;
@@ -36,6 +38,25 @@ public BookController(BookRepository bookDao, AuthorRepository authorsDao, Genre
         return "books/create";
     }
 
+    @GetMapping("/books/{id}")
+    public String showBook(@PathVariable long id, Model model) {
+        model.addAttribute("singleBook",bookDao.getById(id));
+        return "books/show";
+    }
+
+    @GetMapping("/books/{id}/edit")
+    public String showEditBookForm(@PathVariable long id, Model model) {
+        model.addAttribute("bookToEdit", bookDao.getById(id));
+        return "books/edit";
+    }
+
+    @PostMapping("/books/{id}/edit")
+    public String submitBookEdit(@ModelAttribute Book bookToEdit, @PathVariable long id) {
+        bookToEdit.setAuthor(authorsDao.getById(1L));
+        bookDao.save(bookToEdit);
+        return "redirect:/books/" + id;
+    }
+
     @PostMapping("/books/create")
 //    public String createBook(@ModelAttribute Book book, @RequestParam(name="genres") List<Long> genreIds) {
         public String createBook(@ModelAttribute Book book) {
@@ -55,6 +76,13 @@ public BookController(BookRepository bookDao, AuthorRepository authorsDao, Genre
         emailService.prepareAndSend("Testing", "Did this work");
         return "redirect:/";
     }
+
+    @GetMapping("/books/{id}/delete")
+    public String deleteBook(@PathVariable long id) {
+        bookDao.delete(bookDao.getById(id));
+        return "redirect:/books";
+    }
+
     }
 
 //import com.codeup.springblog.repositories.BookRepository;
